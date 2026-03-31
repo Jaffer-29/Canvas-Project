@@ -158,7 +158,17 @@ java RunFrame
 * Audio feature is optional and disabled by default
 
 ---
+## Acknowledgment
 
+This project was inspired by a tutorial from Curad Programmer.  
+The original concept was learned from the following resources:
+
+- GitHub Repository: https://github.com/curadProgrammer/Java-Paint  
+- YouTube Tutorial: https://www.youtube.com/watch?v=vcgeCYKdyC4
+
+The implementation in this repository has been modified and extended with additional features and improvements.
+
+---
 ## Project Status
 
 Completed (Mini Project) <br>
