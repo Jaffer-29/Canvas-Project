@@ -14,6 +14,9 @@ The Paint Canvas Application provides a user-friendly environment for freehand d
 The system integrates essential drawing tools such as color selection, brush size control, and canvas reset into a single desktop application.
 
 ---
+![image_url](https://github.com/Jaffer-29/Canvas-Project/blob/56affd8ebd46c08bef7db6e3fae3a5178eee6d97/Canvas%20ScreenShort.png)
+
+---
 
 ## User Interface Note
 
