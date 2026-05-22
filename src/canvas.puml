@@ -1,0 +1,234 @@
+@startuml PaintCanvasApplication
+
+' =====================================================
+' Paint Canvas Application
+' Modern Balanced Color Theme
+' =====================================================
+
+title <size:24><b>Paint Canvas Application</b></size>
+title <size:13><color:#64748B>Professional UML Class Diagram</color></size>
+
+' =====================================================
+' GLOBAL STYLE
+' =====================================================
+
+skinparam backgroundColor #F4F6F9
+skinparam shadowing true
+skinparam roundcorner 18
+skinparam dpi 220
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+skinparam defaultFontName "Segoe UI"
+skinparam defaultFontSize 13
+
+skinparam ArrowColor #546E7A
+skinparam ArrowThickness 1.5
+
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #7C93C3
+    BorderThickness 1.5
+
+    FontColor #1E293B
+    AttributeFontColor #475569
+
+    HeaderBackgroundColor #D6E4FF
+    HeaderFontColor #1E3A5F
+}
+
+skinparam package {
+    BorderColor #B0BEC5
+    BorderThickness 1.6
+    FontColor #263238
+    BackgroundColor #FFFFFF
+}
+
+skinparam note {
+    BackgroundColor #FFF3CD
+    BorderColor #E0A800
+    FontColor #5C4400
+}
+
+skinparam legend {
+    BackgroundColor #FFFFFF
+    BorderColor #B0BEC5
+    FontColor #334155
+}
+
+hide empty members
+hide circle
+
+' =====================================================
+' APPLICATION ENTRY
+' =====================================================
+
+package "Application Entry" #DCEBFF {
+
+    class RunFrame {
+        +main(args : String[]) : void
+    }
+}
+
+' =====================================================
+' GUI LAYER
+' =====================================================
+
+package "GUI Layer" #D8F3DC {
+
+    class PaintGUI {
+
+        -canvas : Canvas
+        -brushSlider : JSlider
+        -clearButton : JButton
+        -colorButton : JButton
+
+        --
+
+        +PaintGUI()
+
+        --
+
+        -initializeGUI() : void
+        -registerEvents() : void
+    }
+
+    class Canvas {
+
+        -brushSize : int
+        -x : int
+        -y : int
+        -canvasHeight : int
+        -canvasWidth : int
+        -currentColor : Color
+
+        -allPaths : List<List<ColorPoints>>
+        -currentPath : List<ColorPoints>
+
+        --
+
+        +Canvas(width : int, height : int)
+
+        --
+
+        +setColor(color : Color) : void
+        +setBrushSize(size : int) : void
+        +resetCanvas() : void
+        +paintComponent(g : Graphics) : void
+
+        --
+
+        -drawPath(g2d : Graphics2D) : void
+    }
+}
+
+' =====================================================
+' MODEL LAYER
+' =====================================================
+
+package "Model Layer" #FFE5D9 {
+
+    class ColorPoints {
+
+        -x : int
+        -y : int
+        -color : Color
+
+        --
+
+        +ColorPoints(x : int, y : int, color : Color)
+
+        --
+
+        +getX() : int
+        +getY() : int
+        +getColor() : Color
+    }
+}
+
+' =====================================================
+' JAVA SWING FRAMEWORK
+' =====================================================
+
+package "Java Swing Framework" #E9D8FD {
+
+    class JFrame <<Swing>>
+    class JPanel <<Swing>>
+    class JButton <<Swing>>
+    class JSlider <<Swing>>
+    class MouseAdapter <<Event>>
+    class Graphics <<Rendering>>
+    class Graphics2D <<Rendering>>
+    class JOptionPane <<Utility>>
+    class JColorChooser <<Utility>>
+    class Color <<AWT>>
+}
+
+' =====================================================
+' RELATIONSHIPS
+' =====================================================
+
+JFrame <|-- PaintGUI
+JPanel <|-- Canvas
+
+RunFrame --> PaintGUI : launches
+
+PaintGUI *-- Canvas : contains
+Canvas *-- "many" ColorPoints : stores
+
+Canvas --> Graphics2D : renders
+Canvas --> MouseAdapter : handles
+Canvas --> Color : uses
+
+PaintGUI --> JButton : controls
+PaintGUI --> JSlider : brush control
+PaintGUI --> JOptionPane : dialogs
+PaintGUI --> JColorChooser : color picker
+PaintGUI --> JPanel : layout
+
+ColorPoints --> Color : reference
+
+' =====================================================
+' NOTES
+' =====================================================
+
+note right of Canvas
+<b>Canvas Responsibilities</b>
+
+• Drawing operations
+• Mouse interaction
+• Brush management
+• Stroke rendering
+• Canvas repainting
+• Path tracking
+end note
+
+note bottom of PaintGUI
+<b>Main Application GUI</b>
+
+Handles the complete
+paint application workflow
+and user interactions.
+end note
+
+note bottom of ColorPoints
+<b>Point Data Model</b>
+
+Stores:
+• Coordinates
+• Brush color
+• Point information
+end note
+
+' =====================================================
+' LEGEND
+' =====================================================
+
+legend right
+|= Relationship |= Meaning |
+| <|-- | Inheritance |
+| --> | Dependency |
+| *-- | Composition |
+endlegend
+
+@enduml
